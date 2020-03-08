@@ -4,8 +4,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 # from src.entities.entity import Session, engine, Base
-from entity import Session, engine, Base
-from exam import Exam, ExamSchema
+from src.entitites.entity import Session, engine, Base
+from src.entitites.exam import Exam, ExamSchema
 
 # creating the Flask application
 app = Flask(__name__)
