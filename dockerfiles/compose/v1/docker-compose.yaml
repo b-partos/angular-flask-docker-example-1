@@ -1,0 +1,47 @@
+version: "3.3"
+services:
+
+  database:
+    image: postgres:latest
+    ports:
+      - "25020:5432"
+    volumes:
+      - "~/Projects/angular-flask-docker-example-1/database/data:/var/lib/postgresql/data"
+    networks:
+      - backend
+    env_file:
+      - database.env
+    restart: unless-stopped
+
+
+  flask:
+    image: my-flask:latest
+    ports:
+      - "25010:5000"
+    volumes:
+    - "~/Projects/angular-flask-docker-example-1/backend:/root/backend"
+    - "~/Projects/angular-flask-docker-example-1/backend-virtualenvs:/root/.local/share/virtualenvs"
+    networks:
+      - backend
+      - frontend
+    # A simle infinite loop so the docker image does not stop
+    command: ["tail", "-f", "/dev/null"]
+
+
+
+
+  angular:
+    image: my-angular:latest
+    ports:
+      - "25000:4200"
+    volumes:
+      - "~/Projects/angular-flask-docker-example-1/frontend:/root/frontend"
+    networks:
+      - frontend
+    # A simle infinite loop so the docker image does not stop
+    command: ["tail", "-f", "/dev/null"]
+
+
+networks:
+  backend:
+  frontend:
